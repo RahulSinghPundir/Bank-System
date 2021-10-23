@@ -1,0 +1,207 @@
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+using namespace std;
+class saving;
+class current;
+class bank{
+	string name,type;
+	//To ask name of user and type of account (Saving,Current)
+	int account_number,account_type,balances,pin;
+	//To ask Account Number,Type(0,1) and set Balance and pin
+	public:
+	static string bank_name;
+	static int counter;
+	//As Bank name are same we have to take static bank name and a counter to know how many 		members are connected to our bank 
+	void new_account();
+	void deposite();
+	void withdraw();
+	void balance_enquery();
+	void display();
+	void displayall();
+	
+	int account_no(){return account_number;}
+	int account_pin(){return pin;}
+	//To secure our account number and pin I pass it through it by function
+};
+
+void bank::new_account(){
+	cin.ignore();
+	cout<<"Enter your name: "<<endl;
+	getline(cin,name);
+	cout<<"Enter 0 for saving and 1 for current: "<<endl;
+	cin>>account_type;
+	
+	if(account_type==0)
+		type="Saving";
+	else
+		type="Current";
+	//To set our account type in string as we take it as a integer type(0,1) so set replace it by 		    string(Saving,Current)
+	account_number+=counter;
+	cout<<"Your account number is: "<<account_number<<endl;
+	cout<<"**/**/**/**/BE REMEMBER YOUR ACCOUNT NUMBER**/**/**/**/"<<endl;
+	cout<<endl<<"ENTER A SECUR PIN FOR ACCOUT: ";
+	cin>>pin;
+	cout<<endl<<endl<<"***************Congratulation! NOW You are a member of "<<bank_name<<"********************"<<endl<<endl;	
+}
+
+void bank:: deposite(){
+	int dpmoney;
+	cout<<"***************You are a member of-"<<bank::bank_name<<"********************"<<endl;
+	cout<<"Enter how money you want to deposite in account: ";
+	cin>>dpmoney;//Ask deposite money
+	this->balance+=dpmoney;//Increase Balance
+	cout<<endl<<"BALANCE->"<<this->balance<<"."<<endl;			
+}
+
+void bank:: withdraw(){
+	int wmoney;
+	cout<<"***************You are a member of-"<<bank::bank_name<<"********************"<<endl;
+	cout<<"Enter how money you want to withdraw in account: ";
+	cin>>wmoney;//Ask Withdraw money
+	if( (balance-wmoney) <=500 ){cout<<"You cannot withdraw money"<<endl;}//If balance is less than 500 accout holder cannot withdraw money
+	else{
+		balance-=wmoney;//Change the balance
+		cout<<endl<<"BALANCE is ->"<<balance<<" now."<<endl;
+	}		
+}
+
+void bank::balance_enquery(){
+	cout<<"***************You are a member of-"<<bank::bank_name<<"********************"<<endl;//Display only bank balance of user
+	cout<<"You have a balance of "<<balance<<"in "<<type<<"."<<endl;
+}
+
+void bank::display(){
+	cout<<"***************WELCOME to-"<<bank_name<<"********************"<<endl;//Display the the user information.
+	cout<<"Account holder name is:->"<<name<<"."<<endl;
+	cout<<"Account holder account type is:->"<<type<<"."<<endl;
+	cout<<"Account holder account number is:->"<<account_number<<"."<<endl;
+	cout<<"You have a balance of "<<balance<<"in "<<type<<"."<<endl;
+}
+
+void bank::displayall(){
+		//Only access ofbank employee secured by password.
+		cout<<"Account holder name is:->"<<name<<"."<<endl;
+		cout<<"Account holder account type is:->"<<type<<"."<<endl;
+		cout<<"Account holder account number is:->"<<account_number<<"."<<endl;
+		cout<<"You have a balance of "<<balance<<"in "<<type<<"."<<endl;	
+}
+
+
+string bank::bank_name="World Bank";
+int bank::counter=0;
+
+int temp(){
+	int ask_acco;
+	cout<<"Enter the account number: ";
+	cin>>ask_acco;
+	return ask_acco;
+}
+int tempy(){
+	int ask_pin;
+	cout<<"Enter the pin: ";
+	cin>>ask_pin;
+	return ask_pin;
+}
+int main(){
+	bank client[100];
+	int choice,ask_acco,ask_pin,type;
+	string a="y";
+	while(a!="n"){
+		cout<<"***********Main Menu***********"<<endl;
+		fflush(stdin);
+		cout<<"Enter 1 for new account \nEnter 2 for deposite \nEnter 3 for withdraw \nEnter 4 for balance enquery \nEnter 5 for display client account \nEnter 6 for **display all account: ";
+		cin>>choice;
+		if(choice==1){
+			bank::counter++;
+			client[bank::counter].new_account();
+			
+		}
+		else if(choice==2){
+			ask_acco=temp();
+			ask_pin=tempy();
+			int j=bank::counter;
+			while(j>0){
+				if(ask_acco==client[j].account_no()){
+					if(ask_pin==client[j].account_pin()){
+						client[j].deposite();}
+					else{
+						cout<<endl<<"????????YOU ENTERED A WRONG PIN????????"<<endl;
+						break;
+					}
+				}
+				j--;
+			}
+		}
+		else if(choice==3){
+			ask_acco=temp();
+			ask_pin=tempy();
+			int j=bank::counter;
+			while(j>0){
+				if(ask_acco==client[j].account_no()){
+					if(ask_pin==client[j].account_pin()){
+						client[j].withdraw();}
+					else{
+						cout<<endl<<"????????YOU ENTERED A WRONG PIN????????"<<endl;
+						break;
+					}
+				}
+				j--;
+			}
+		}
+		else if(choice==4){
+			ask_acco=temp();
+			ask_pin=tempy();
+			int j=bank::counter;
+			while(j>0){
+				if(ask_acco==client[j].account_no()){
+					if(ask_pin==client[j].account_pin()){
+						client[j].balance_enquery();}
+					else{
+						cout<<endl<<"????????YOU ENTERED A WRONG PIN????????"<<endl;
+						break;
+					}
+				}
+				j--;
+			}
+		}
+		else if(choice==5){
+			ask_acco=temp();
+			ask_pin=tempy();
+			int j=bank::counter;
+			while(j>0){
+				if(ask_acco==client[j].account_no()){
+					if(ask_pin==client[j].account_pin()){
+						client[j].display();}
+					else{
+						cout<<endl<<"????????YOU ENTERED A WRONG PIN????????"<<endl;
+						break;
+					}
+				}
+				j--;
+			}
+		}
+		else if(choice==6){
+			string password;
+			cout<<"Enter bank system access password: ";
+			cin>>password;
+			if(password=="BestBank"){
+									cout<<"***************WELCOMEto-"<<bank::bank_name<<"********************"<<endl;
+				for(int i=1;i<=bank::counter;i++){
+					cout<<i<<":"<<endl;
+					client[i].displayall();
+				}
+			}
+			else{
+				cout<<"????????????????? Wrong Password ?????????????????"<<endl;
+			}
+		}
+        else{
+			cout<<"/a Re-Enter the choice.";
+			continue;
+		}
+		cout<<"Press any key to continue and n for exit: ";
+		cin.ignore();
+		getline(cin,a);
+	}	
+}
