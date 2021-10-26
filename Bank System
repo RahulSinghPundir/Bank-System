@@ -9,10 +9,10 @@ class bank{
 	//To ask name of user and type of account (Saving,Current)
 	int account_number,account_type,balances,pin;
 	//To ask Account Number,Type(0,1) and set Balance and pin
-	public:
 	static string bank_name;
 	static int counter;
 	//As Bank name are same we have to take static bank name and a counter to know how many 		members are connected to our bank 
+	public:
 	void new_account();
 	void deposite();
 	void withdraw();
